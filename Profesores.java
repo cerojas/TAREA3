@@ -26,12 +26,12 @@ public class Profesores {
 	}
 	
 	
-	public static void agregarProfesor()
+	public static void agregarProfesor() throws IOException
 	{
 		InputStreamReader converte = new InputStreamReader(System.in);
 		BufferedReader lee = new BufferedReader(converte);
 		
-		/*
+		
 		boolean salirProfesores =true;
 		
 		inicio:
@@ -100,7 +100,7 @@ public class Profesores {
 			 listaProfesores.add(datosProfesor);
 		}
 		
-		*/
+		
 		
 		DatosProfesores datosProfesor= new DatosProfesores();
 		
