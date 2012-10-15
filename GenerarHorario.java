@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GenerarHorario
 {
-	//en caso de que falten profesores, si no quiere agregar mas salimos con esta variable salir
+	/*en caso de que falten profesores, si no quiere agregar mas salimos con esta variable salir*/
 	public static boolean salir= false;
 	
 	public static void horario() throws IOException
@@ -17,13 +17,8 @@ public class GenerarHorario
 		BufferedReader lee = new BufferedReader(converter);
 				
 		List<DatosHorario> horario = new ArrayList<DatosHorario>();
-	
-		//total de creditos 
-		int creditos =0;
-		for(int s=0; s<Materias.listaMaterias.size(); s++)
-		{
-			creditos += Materias.listaMaterias.get(s).creditos;
-		}
+		
+		
 		/*___________________________________________________________*/
 		
 		// variables 
@@ -31,8 +26,8 @@ public class GenerarHorario
 		int veces=0; 
 		int hora=8; 
 		int cuentadias=0;
-		int horasProfesores= totalHorasProfesores();
-		
+		int horasProfesores= Profesores.totalHorasProfesores();
+		int creditos=Materias.totalCreditos();
 		/*_________________________________________*/
 		
 		while(creditos>0)
@@ -82,25 +77,16 @@ public class GenerarHorario
 						
 						Profesores.listaProfesores.set(contadorProfesores-1, profesorCambiar);
 						
-						
-						
-						
-						System.out.println(Profesores.listaProfesores.get(contadorProfesores-1).nombre);
-						System.out.println(Profesores.listaProfesores.get(contadorProfesores-1).horas+"\n");
-						
-						
-						
-						
+					
 						
 						/*________________________________________________________________________*/
 						
 						
 						
-						//total de horas de profesores 
+								//total de horas de profesores 
 						
-						 horasProfesores = totalHorasProfesores();
+						 horasProfesores = Profesores.totalHorasProfesores();
 						
-						System.out.println("\nTotal creditos "+horasProfesores);
 						/*_____________________________________________________________*/
 						
 						
@@ -111,7 +97,7 @@ public class GenerarHorario
 							if(contadorProfesores>1)
 							{ 
 								contadorProfesores--;
-								contadorProfesores = profesorDisponible(contadorProfesores);
+								contadorProfesores = Profesores.profesorDisponible(contadorProfesores);
 								
 							}
 							else
@@ -124,15 +110,15 @@ public class GenerarHorario
 							boolean seguir= true;
 							while(seguir)
 							{
-								 System.out.println("\nFaltan creditos sin asignar y NO hay PROFESORES con horas disponibles");
+								 System.out.println("\n\n\nFaltan creditos sin asignar y NO hay PROFESORES con horas disponibles");
 								 System.out.print("Desea AGREGAR PROFESORES y/n: ");
 								 		
 								 String entrada= lee.readLine();
 								 if(entrada.toLowerCase().equals("y"))
 								 {
 									 Profesores.agregarProfesor();
-									 horasProfesores= totalHorasProfesores();
-									 contadorProfesores= profesorDisponible(contadorProfesores);
+									 horasProfesores= Profesores.totalHorasProfesores();
+									 contadorProfesores= Profesores.profesorDisponible(contadorProfesores);
 									 seguir = false;
 								 }
 								 else if(entrada.toLowerCase().equals("n"))
@@ -141,7 +127,7 @@ public class GenerarHorario
 									 seguir = false;
 									
 								 }
-								 else{System.out.println("\nOpcion invalida !");}
+								 else{System.out.println("\n\n\nOpcion invalida !");}
 							}
 							
 							if(salir){break;}
@@ -171,11 +157,8 @@ public class GenerarHorario
 			/*___________________________________*/
 			
 			//CALCULA LOS CREDITOS
-			creditos=0;
-			for(DatosMaterias m : Materias.listaMaterias)
-			{
-				creditos += m.creditos;
-			}
+			creditos=Materias.totalCreditos();
+			
 			/*________________________________________________*/
 				
 		}//fin while
@@ -192,24 +175,7 @@ public class GenerarHorario
 		}
 		/*___________________________________________________________________________________________________________________*/
 	
-		
-		System.out.println(Profesores.listaProfesores.get(0).nombre);
-		System.out.println(Profesores.listaProfesores.get(0).horas+"\n");
-		
-
-		System.out.println(Profesores.listaProfesores.get(1).nombre);
-		System.out.println(Profesores.listaProfesores.get(1).horas+"\n");
-		
-
-		System.out.println(Profesores.listaProfesores.get(2).nombre);
-		System.out.println(Profesores.listaProfesores.get(2).horas+"\n");
-		
-		
-		
-		
-		
-		
-		
+			
 	}//fin metodo horario()
 	
 	
@@ -217,7 +183,7 @@ public class GenerarHorario
 	
 	
 	
-	//genera el dia del horario
+			//genera el dia del horario
 	public static String generarDia(int contadorDia)
 	{
 		String dia;
@@ -253,42 +219,8 @@ public class GenerarHorario
 			break;	
 		}
 		
-		
 		return dia;
 	}
 	
-	
-	
-	
-	//generar total horas profesores
-	public static int totalHorasProfesores()
-	{
-		int total=0;
-		for(int s=0; s<Profesores.listaProfesores.size(); s++)
-		{
-			total += Profesores.listaProfesores.get(s).horas;
-		}
-		return total;
-	}
-	
-	
-	
-	//buscar profesor con horas  disponibles
-	public static int profesorDisponible(int contador)
-	{
-		int contadorProfesores=contador;
-		while(Profesores.listaProfesores.get(contadorProfesores-1).horas==0)
-		{
-			if(contadorProfesores>1)
-			{ 
-				contadorProfesores--;
-			}
-			
-			else
-			{ 
-				contadorProfesores=Profesores.listaProfesores.size(); 
-			}
-		}
-		return contadorProfesores;
-	}
+
 }

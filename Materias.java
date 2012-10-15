@@ -12,17 +12,17 @@ public class Materias {
 	
 	public static boolean validarMaterias(String nombre)
 	{
-		boolean exite= false;
+		boolean existe= false;
 		
 		for(DatosMaterias a : listaMaterias)
 		{
 			if(a.nombre.equals(nombre))
 			{
-				exite = true;
+				existe = true;
 			}
 		}
 		
-		return exite;
+		return existe;
 	}
 	
 	
@@ -159,5 +159,84 @@ public class Materias {
 		
 		
 	}
-
+	
+	
+	
+	/*calcula total creditos*/
+	public static int totalCreditos()
+	{	
+		int  total=0;
+		for(DatosMaterias m : listaMaterias)
+		{
+			total += m.creditos;
+		}
+		
+		return total;
+	}
+	
+	
+	/*imprime en pantalla las materias*/
+	public static void imprimeMaterias()
+	{	
+		int  contador=1;
+		System.out.println("#   Nombre         Aula         Creditos\n");
+		
+		for(DatosMaterias m : listaMaterias)
+		{
+			System.out.println(contador +"   "+ m.nombre +".........."+ m.aula +"..........."+ m.creditos);
+			 contador++;
+		}
+		System.out.println("____________________");
+		System.out.println("Total Materias: "+ (contador-1));
+		System.out.println("Total Creditos: "+ totalCreditos());
+	
+	}
+	
+	
+	
+	public static void eliminarMateria() throws IOException
+	{
+		
+		InputStreamReader converte = new InputStreamReader(System.in);
+		BufferedReader lee = new BufferedReader(converte);
+		
+		boolean salir=true;
+		 while(salir)
+		 {
+			 
+			 imprimeMaterias();
+			 
+			 System.out.println("\nPulse el # de la materia para ELIMINAR o 'S' para SALIR");
+			 String entrada= lee.readLine();
+			 
+			 //salir
+			 if(entrada.toLowerCase().equals("s")){salir=false; break;}
+			 
+			 if(IsNumero.IsInt(entrada))
+			 {
+				 int n=Integer.parseInt(entrada);
+				 if((n-1)<listaMaterias.size() && n>=0)
+				 {
+					 System.out.println("\nEsta seguro de ELIMINAR "+ listaMaterias.get(n-1).nombre +"?  y/n");
+					 String eliminar= lee.readLine();
+					 if(eliminar.toLowerCase().equals("y"))
+					 {
+						 listaMaterias.remove(n-1);
+					 }
+					 else if(eliminar.toLowerCase().equals("n"))
+					 {
+						 
+					 }
+					 else{System.out.println("\nOpcion incorrecta!");}
+				 }
+				 
+			 }
+			 else
+			 {
+				 System.out.println("\nEl dato debe ser numerico o 'S'!");
+			 }
+				
+		 }
+	}
+	
 }
